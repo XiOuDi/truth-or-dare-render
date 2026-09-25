@@ -1,0 +1,24 @@
+# Render Blueprint 配置
+# 文档: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: truth-or-dare-bot
+    runtime: python
+    plan: free
+    region: singapore
+    # 构建命令：安装依赖
+    buildCommand: pip install -r requirements.txt
+    # 启动命令：运行 Bot（Webhook 模式，由 Render 注入 RENDER_EXTERNAL_URL / PORT）
+    startCommand: python bot.py
+    # 健康检查路径（代码中 GET / 返回 OK）
+    healthCheckPath: /
+    autoDeploy: true
+    envVars:
+      # ---- 必填：Upstash Redis（敏感配置与游戏数据都存于 Upstash） ----
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+      # ---- 可选：Python 版本 ----
+      - key: PYTHON_VERSION
+        value: 3.11.9
