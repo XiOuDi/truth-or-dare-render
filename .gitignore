@@ -1,0 +1,11 @@
+# 敏感配置：绝不要提交到版本库
+.env
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# 运行时产物（日志）
+*.log
